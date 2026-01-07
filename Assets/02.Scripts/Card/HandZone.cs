@@ -5,7 +5,7 @@ using UnityEngine;
 public class HandZone : MonoBehaviour
 {
     [SerializeField] float cardWidth = 160f;   //카드 한 장의 폭
-    [SerializeField] float baseSpacing = 40f;  //카드 사아 기본 간격
+    [SerializeField] float baseSpacing = 100f;  //카드 사이 기본 간격
     [SerializeField] float minSpacing = 15f;   //카드 사이 최소 간격
 
     private List<CardView> handCards = new List<CardView>();
@@ -21,7 +21,7 @@ public class HandZone : MonoBehaviour
         ArrangeCard();
     }
 
-    //패에 있는 카드가 묘지로 갈 때
+    //패에 있는 카드가 패에서 다른 곳으로 이동할 때(필드, 묘지)
     public void RemoveCard(CardView card)
     {
         handCards.Remove(card);

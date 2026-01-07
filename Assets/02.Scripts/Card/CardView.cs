@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [Header("카드 데이터")]
+    [SerializeField] CardData cardData;
+
     [Header("카드 앞면과 뒷면")]
-    [SerializeField] private GameObject frontImage;  //카드 앞면
-    [SerializeField] private GameObject backImage;   //카드 뒷면
+    [SerializeField] private Image frontImage;  //카드 앞면
+    [SerializeField] private Image backImage;   //카드 뒷면
 
     //RectTransform : UI전용 위치정보 transform
     private RectTransform rectTransform;
 
-    private Canvas canvas;
+    [SerializeField] private Canvas canvas;
 
     //여러 UI요소들을 한번에 제어한다.(투명도, 상호작용 가능여부, 레이캐스트 차단 등)
     private CanvasGroup canvasGroup;
@@ -22,6 +26,12 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     //드래그 후 카드가 있던 원래 위치
     private Vector2 originPosition;
+
+    public CardData CardData
+    {
+        get { return cardData; }
+        set { cardData = value; }
+    }
 
     private void Awake()
     {
@@ -35,13 +45,13 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void ShowFront()
     {
-        frontImage.SetActive(true);
-        backImage.SetActive(false);
+        frontImage.gameObject.SetActive(true);
+        backImage.gameObject.SetActive(false);
     }
     public void ShowBack()
     {
-        frontImage.SetActive(false);
-        backImage.SetActive(true);
+        frontImage.gameObject.SetActive(false);
+        backImage.gameObject.SetActive(true);
     }
     //터치, 드래그 시작
     public void OnBeginDrag(PointerEventData eventData)
@@ -53,12 +63,14 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         //드래그 중에는 카드가 클릭을 막지 않도록
         //blocksRaycasts = 클릭(터치)의 레이캐스트 이벤트를 받을지 결정
         canvasGroup.blocksRaycasts = false;
+
+        //transform.SetAsLastSibling();
     }
     //드래그 중
     public void OnDrag(PointerEventData eventData)
     {
         //마우스(터치) 이동만큼 카드 이동
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        rectTransform.anchoredPosition += eventData.delta / UIManager.Instance.Canvas.scaleFactor;
     }
     //드롭, 드래그 끝
     public void OnEndDrag(PointerEventData eventData)
