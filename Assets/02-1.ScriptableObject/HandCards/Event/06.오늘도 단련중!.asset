@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 742e46a6bd1107741a3534ee58cfd1e5, type: 3}
-  m_Name: IchkaCard
+  m_Name: "06.\uC624\uB298\uB3C4 \uB2E8\uB828\uC911!"
   m_EditorClassIdentifier: 
-  cardName: 
-  cardType: 0
-  cost: 0
-  hp: 0
+  cardName: "\uC624\uB298\uB3C4 \uB2E8\uB828\uC911!"
+  cardType: 2
+  cost: 2
+  maxHP: 0
   attack: 0
+  frontImage: {fileID: 21300000, guid: 57509a573897f79499b9fa55a43341e7, type: 3}
+  EquipmentImage: {fileID: 0}
+  typrIcon: {fileID: 21300000, guid: bd3eadbb41301714cb5e6b55ec453799, type: 3}
   abilityText: 
   attackPattern: 0
   passiveTrigger: 0

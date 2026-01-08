@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class FieldCardSlot : MonoBehaviour
 {
-    private CardView cardView;
+    private HandCardControl hanfCard;
 
-    public void SetFieldCard(CardView card)
+    public void SetFieldCard(HandCardControl card)
     {
-        if (cardView != null)
+        if (hanfCard != null)
         {
-            Destroy(cardView.gameObject);
+            Destroy(hanfCard.gameObject);
         }
 
-        cardView = card;
+        hanfCard = card;
         card.transform.SetParent(transform);
         card.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }

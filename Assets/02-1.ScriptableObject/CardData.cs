@@ -39,14 +39,21 @@ public class CardData : ScriptableObject
     public int maxHP;
     public int attack;
 
+    [Header("앞면 이미지")]
+    public Sprite frontImage;      //앞면 이미지
+    public Sprite EquipmentImage;  //장비 카드만 이미지 하나 더 있음
+    public Sprite typrIcon;        //타입 아이콘(사건,장비,필드)
+
     [TextArea]
-    public string abilityText; //스트라이커 기본 공격 능력 또는 서포트 카드 능력
+    public string abilityText; //스트라이커 기본 공격 능력 또는 서포트 카드 능력 설명
 
     [Header("공격 패턴")]
     public AttackPattern attackPattern;
 
     [Header("패시브 발동 트리거")]
     public PassiveTrigger passiveTrigger;
-    public string passiveText;
+    [TextArea]
+    public string passiveText; //패시브 설명
+
 
 }

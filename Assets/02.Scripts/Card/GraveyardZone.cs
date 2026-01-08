@@ -6,6 +6,8 @@ public class GraveyardZone : MonoBehaviour
 {
     public static GraveyardZone Instance { get; private set; }
 
+    [SerializeField] private HandZone handZone;
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,9 +21,10 @@ public class GraveyardZone : MonoBehaviour
         }
     }
 
-    public void GoToGrave(CardView card)
+    public void GoToGrave(HandCardControl card)
     {
         card.transform.SetParent(transform);
         card.gameObject.SetActive(false);
+        handZone.RemoveCard(card);
     }
 }

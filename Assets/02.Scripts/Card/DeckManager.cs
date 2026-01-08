@@ -6,13 +6,16 @@ public class DeckManager : MonoBehaviour
 {
     public static DeckManager Instance { get; private set; }
 
-    [SerializeField] private GameObject cardPrefab;
+    [Header("카드 프리팹")]
+    [SerializeField] private HandCardControl handcardPrefab;
+
+    [Header("덱에 존재하는 카드들(프리팹 말고 데이터)")]
     [SerializeField] private List<CardData> deckDataList;
 
+    [Header("손 패")]
     [SerializeField] private HandZone handZone;
 
-    private Queue<GameObject> deck = new Queue<GameObject>();
-    private List<GameObject> grave = new List<GameObject>();
+    private Queue<HandCardControl> deck = new Queue<HandCardControl>();
 
     private void Awake()
     {
@@ -26,60 +29,44 @@ public class DeckManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Start()
+    //게임 시작하면 플레이어의 카드가 덱으로 이동
+    public void CreatDeck()
     {
-        CreatDeck();
+        List<CardData> deckList = new List<CardData>(deckDataList);
+        DeckShuffle(deckList);
 
-        for (int i = 0; i < 4;  i++)
+        foreach (var data in deckList)
         {
-            DrawCard();
-        }
+            HandCardControl card = Instantiate(handcardPrefab, transform);
 
-        DrawCard();
-    }
-    //게임 시작하면 플레이어의 카드가 덱으로 이동(아직 미완성 메서드)
-    private void CreatDeck()
-    {
-        foreach (var data in deckDataList)
-        {
-            GameObject card = Instantiate(cardPrefab);
-            card.SetActive(false);
-
-            CardView cardView = card.GetComponent<CardView>();
-            cardView.CardData = data;
-            cardView.ShowBack();
-
+            //card.CardData = data;
+            card.IsCardData(data);
+            card.gameObject.SetActive(false);
             deck.Enqueue(card);
         }
-
-        //리스트로 만들고
-
-        //랜덤 셔플
-
-        //다시 큐에 담기
     }
     //카드 드로우!
     public void DrawCard()
     {
-        if (deck.Count == 0)
-        {
-            foreach(var isCard in grave)
-            {
-                deck.Enqueue(isCard);
-            }
-
-            //메모리 누수 방지, 데이터 중복 및 오류 방지
-            grave.Clear();
-        }
-
-
         if (deck.Count == 0) return;
 
-        GameObject card = deck.Dequeue();
-        card.SetActive(true);
+        HandCardControl card = deck.Dequeue();
+        card.gameObject.SetActive(true);
+        handZone.AddCard(card);
 
-        CardView cardView = card.GetComponent<CardView>();
-        handZone.AddCard(cardView);
+        card.ShowToFront();
+    }
+    //덱 셔플
+    private void DeckShuffle(List<CardData> deckList)
+    {
+        for (int i = 0; i < deckList.Count - 1;i++)
+        {
+            int rand = Random.Range(i, deckList.Count);
+            //(deckList[i], deckList[rand]) = (deckList[rand], deckList[i]);
+
+            var temp = deckList[i];
+            deckList[i] = deckList[rand];
+            deckList[rand] = temp;
+        }
     }
 }
