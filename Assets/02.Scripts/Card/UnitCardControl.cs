@@ -30,6 +30,22 @@ public class UnitCardControl : MonoBehaviour
 
     private void Awake()
     {
+        //if (IsStriker)
+        //{
+        //    currentHP = cardData.maxHP;
+        //    unitCardUI.ShowStriker(CardData, currentHP);
+        //}
+        //else if (isSpecial)
+        //{
+        //    unitCardUI.ShowSpecial(CardData);
+        //}
+    }
+
+    public void IsCardData(CardData cardData)
+    {
+        this.cardData = cardData;
+        //unitCardUI.SetUIData(cardData);
+
         if (IsStriker)
         {
             currentHP = cardData.maxHP;

@@ -165,7 +165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 321.99988, y: -245.90002}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 122.2443, y: 113.5634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8832311214576986463
@@ -617,8 +617,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000017882, y: 0}
-  m_SizeDelta: {x: 21.4902, y: 20.1373}
+  m_AnchoredPosition: {x: -0.00012499, y: -0.000014484}
+  m_SizeDelta: {x: 30.361, y: 28.597}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1013813635964477897
 CanvasRenderer:
@@ -778,6 +778,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontImage: {fileID: 8239307953419881692}
   backImage: {fileID: 631045687304600978}
-  equipmentImage: {fileID: 0}
+  equipmentImage: {fileID: 4855411513967864175}
   costText: {fileID: 1838454169601552428}
   typeIcon: {fileID: 5235748941529713908}

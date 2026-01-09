@@ -19,7 +19,7 @@ MonoBehaviour:
   attack: 0
   frontImage: {fileID: 21300000, guid: d75e5e9a820d21145a096a8fe22dd6e2, type: 3}
   EquipmentImage: {fileID: 0}
-  typrIcon: {fileID: 21300000, guid: bd3eadbb41301714cb5e6b55ec453799, type: 3}
+  typeIcon: {fileID: 21300000, guid: bd3eadbb41301714cb5e6b55ec453799, type: 3}
   abilityText: 
   attackPattern: 0
   passiveTrigger: 0

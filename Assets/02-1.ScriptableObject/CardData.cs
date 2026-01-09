@@ -42,7 +42,7 @@ public class CardData : ScriptableObject
     [Header("앞면 이미지")]
     public Sprite frontImage;      //앞면 이미지
     public Sprite EquipmentImage;  //장비 카드만 이미지 하나 더 있음
-    public Sprite typrIcon;        //타입 아이콘(사건,장비,필드)
+    public Sprite typeIcon;        //타입 아이콘(사건,장비,필드)
 
     [TextArea]
     public string abilityText; //스트라이커 기본 공격 능력 또는 서포트 카드 능력 설명

@@ -19,10 +19,11 @@ public class HandCardUI : MonoBehaviour
     [Header("타입 이미지")]
     [SerializeField] private Image typeIcon;
 
-    public void SetData(CardData cardData)
+    //스크립터블 오브젝트의 UI데이터를 가져옴
+    public void SetUIData(CardData cardData)
     {
         frontImage.sprite = cardData.frontImage;
-        typeIcon.sprite = cardData.typrIcon;
+        typeIcon.sprite = cardData.typeIcon;
 
         //if (cardData.cardType == CardType.Equipment)
         //{

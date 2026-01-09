@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742e46a6bd1107741a3534ee58cfd1e5, type: 3}
+  m_Name: "01.\uC7A5\uC804\uB41C \uBB3C\uCD1D"
+  m_EditorClassIdentifier: 
+  cardName: "\uC7A5\uC804\uB41C \uBB3C\uCD10"
+  cardType: 3
+  cost: 2
+  maxHP: 0
+  attack: 0
+  frontImage: {fileID: 21300000, guid: 73000349f494cb54d966c93229e2d07c, type: 3}
+  EquipmentImage: {fileID: 21300000, guid: 965d2ac9ef9b10f469558d02e45053af, type: 3}
+  typeIcon: {fileID: 21300000, guid: 6967494d1372ba2498ff43931819caf9, type: 3}
+  abilityText: 
+  attackPattern: 0
+  passiveTrigger: 0
+  passiveText: 

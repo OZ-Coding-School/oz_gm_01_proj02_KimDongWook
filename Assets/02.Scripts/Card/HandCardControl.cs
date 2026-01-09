@@ -36,18 +36,19 @@ public class HandCardControl : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
     }
-
+    //매개변수로 받는 데이터를 카드 프리팹의 데이터로 전환
     public void IsCardData(CardData cardData)
     {
         this.cardData = cardData;
-        handCardUI.SetData(cardData);
+        handCardUI.SetUIData(cardData);
         ShowToBack();
     }
-
+    //핸드카드 앞면 표시
     public void ShowToFront()
     {
         handCardUI.ShowFront(cardData);
     }
+    //핸드카드 뒷면 표시
     public void ShowToBack()
     {
         handCardUI.ShowBack();
@@ -114,6 +115,7 @@ public class HandCardControl : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
                 //사용한 사건,장비 카드는 묘지로
                 GraveyardZone.Instance.GoToGrave(this);
+                GraveyardZone.Instance.GraveyardView();
             }
             return;
         }
