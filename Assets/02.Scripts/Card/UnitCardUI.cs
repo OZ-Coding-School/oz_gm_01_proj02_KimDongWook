@@ -14,21 +14,15 @@ public class UnitCardUI : MonoBehaviour
     [SerializeField] private GameObject hpRoot;  //hp관련 UI 한번에 온/오프 용도
     [SerializeField] private TextMeshProUGUI hpText;
 
-    public void SetUIData(CardData cardData)
+    private RectTransform rect;
+    private Vector2 basePos;
+    private Vector3 baseScale;
+
+    private void Awake()
     {
-        frontImage.sprite = cardData.frontImage;
-
-        if (cardData.cardType == CardType.Striker && hpRoot != null)
-        {
-            hpRoot.SetActive(true);
-            hpText.text = cardData.maxHP.ToString();
-        }
-        else if (hpRoot != null)
-        {
-            hpRoot.SetActive(false);
-        }
+        rect = GetComponent<RectTransform>();     
     }
-
+    //스트라이커 카드 앞면 표시
     public void ShowStriker(CardData cardData, int currentHP)
     {
         frontImage.gameObject.SetActive(true);
@@ -39,7 +33,7 @@ public class UnitCardUI : MonoBehaviour
         hpRoot.SetActive(true);
         hpText.text = currentHP.ToString();
     }
-
+    //스페셜 카드 앞면 표시
     public void ShowSpecial(CardData cardData)
     {
         frontImage.gameObject.SetActive(true);
@@ -48,9 +42,33 @@ public class UnitCardUI : MonoBehaviour
         frontImage.sprite = cardData.frontImage;
         hpRoot.SetActive(false);
     }
-
+    //카드 HP 텍스트 실시간 업데이트 용
     public void UpdateHP(int currentHP)
     {
         hpText.text = currentHP.ToString();
     }
+    //슬롯에 카드 배치 후 기본 위치,크기 저장
+    public void BaseTransform()
+    {
+        basePos = rect.anchoredPosition;
+        baseScale = rect.localScale;
+    }
+
+    //게임 시작 시 카드(슬롯) 크기
+    public void SetStartSize()
+    {
+        rect.localScale = baseScale * 1.15f;
+        rect.anchoredPosition = basePos;
+    }
+    // 카드(슬롯) 크기 원상복귀
+    public void SetNormalSize()
+    {
+        rect.localScale = baseScale;
+    }
+    //선택된 카드 연출
+    public void SetSelectUI()
+    {
+        rect.localScale = baseScale * 1.15f;
+    }
+    
 }

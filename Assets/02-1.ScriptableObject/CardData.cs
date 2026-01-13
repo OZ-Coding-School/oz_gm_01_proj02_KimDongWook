@@ -15,7 +15,9 @@ public enum AttackPattern
     None,
     FrontOnly,
     BackOnly,
-    AllEnemy
+    AllAttack,
+    AllBack,
+    RandomAttack
 }
 //패시브 발동 트리거
 public enum PassiveTrigger
@@ -23,6 +25,7 @@ public enum PassiveTrigger
     None,
     OnAttack,
     OnTurnStart,
+    OnTurnEnd,
     OnSummon
 }
 
@@ -35,9 +38,10 @@ public class CardData : ScriptableObject
     public CardType cardType;
     public int cost;
 
-    [Header("체력과 공격")]
+    [Header("체력,공격,스킬 능력치")]
     public int maxHP;
-    public int attack;
+    public int attack; //코하루 카드, 미숙한 티파티 임원 한정 공격 -> 회복
+    public int ability;
 
     [Header("앞면 이미지")]
     public Sprite frontImage;      //앞면 이미지

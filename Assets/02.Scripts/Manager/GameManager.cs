@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        TurnManager.Instance.StartPlayerTurn();
+
         //¿Ø¥÷ πËƒ°
-        //playerFieldZone.SummonPlayerUnit(unitCards);
-        FieldCardManager.Instance.CreatUnitCard();
+        //FieldCardManager.Instance.CreatUnitCard();
+        FieldCardManager.Instance.StartAllUnitSummon();
 
         //µ¶ √ ±‚»≠
         DeckManager.Instance.CreatDeck();

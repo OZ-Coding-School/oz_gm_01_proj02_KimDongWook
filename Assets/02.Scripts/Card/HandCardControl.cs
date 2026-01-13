@@ -93,6 +93,7 @@ public class HandCardControl : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             return;
         }
 
+        //카드가 필드 카드일 경우
         FieldCardSlot fieldSlot = dropPos.GetComponentInParent<FieldCardSlot>();
         if (fieldSlot != null && CardData.cardType == CardType.Field)
         {
