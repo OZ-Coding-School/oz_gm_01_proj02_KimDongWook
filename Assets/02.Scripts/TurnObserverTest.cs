@@ -6,14 +6,14 @@ public class TurnObserverTest : MonoBehaviour
 {
     private void OnEnable()
     {
-        TurnManager.Instance.OnTurnStart += OnTurnStart;
-        TurnManager.Instance.OnTurnEnd += OnTurnEnd;
+        TurnManager.Instance.OnPlayerTurnStart += OnTurnStart;
+        TurnManager.Instance.OnPlayerTurnEnd += OnTurnEnd;
     }
 
     private void OnDisable()
     {
-        TurnManager.Instance.OnTurnStart -= OnTurnStart;
-        TurnManager.Instance.OnTurnEnd -= OnTurnEnd;
+        TurnManager.Instance.OnPlayerTurnStart -= OnTurnStart;
+        TurnManager.Instance.OnPlayerTurnEnd -= OnTurnEnd;
     }
 
     private void OnTurnStart()

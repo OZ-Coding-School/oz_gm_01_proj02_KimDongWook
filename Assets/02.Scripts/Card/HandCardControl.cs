@@ -87,7 +87,9 @@ public class HandCardControl : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         //드래그가 끝났을 때 포인터 아래에 있는 오브젝트 확인
         GameObject dropPos = eventData.pointerEnter;
 
-        if (dropPos == null)
+        int cardCost = cardData.cost;
+
+        if (dropPos == null || !CostManager.Instance.CheckUseCost(cardCost))
         {
             ReturnToHand();
             return;
@@ -108,6 +110,7 @@ public class HandCardControl : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         HandZone handZone = dropPos.GetComponentInParent<HandZone>();
 
+        //손패가 아닌 곳에 놓았을 때 발동
         if (handZone == null)
         {
             if (CardData.cardType == CardType.Event || CardData.cardType == CardType.Equipment)

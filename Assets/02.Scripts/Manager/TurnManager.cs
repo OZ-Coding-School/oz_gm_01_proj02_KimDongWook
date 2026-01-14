@@ -7,13 +7,13 @@ public class TurnManager : MonoBehaviour
 {
     public static TurnManager Instance { get; private set; }
 
-    public event Action OnTurnStart;
-    public event Action OnTurnEnd;
+    public event Action OnPlayerTurnStart;
+    public event Action OnPlayerTurnEnd;
 
     private bool isPlayerTurn = true;
     private bool isEnemyTurn;
 
-    public bool IsPlayerTrun
+    public bool IsPlayerTurn
     {
         get { return isPlayerTurn; }
         set { isPlayerTurn = value; }
@@ -24,7 +24,6 @@ public class TurnManager : MonoBehaviour
         set { isEnemyTurn = value; }
     }
 
-    public bool IsPlayerTurn => isPlayerTurn;
 
     private void Awake()
     {
@@ -38,29 +37,33 @@ public class TurnManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //턴 종료 버튼
-    public void OnClickEndTurn()
-    {
-        if (!isPlayerTurn) return;
-
-        EndPlayerTurn();
-    }
-
     public void StartPlayerTurn()
     {
-        isPlayerTurn = true;
-
         Debug.Log("플레이어 턴 시작");
+        isPlayerTurn = true;
+        isEnemyTurn = false;
+
         //?.Invoke() = 델리게이트나 이벤트가 null이 아닐때만 실행해라는 안전한 호출 방식
-        OnTurnStart?.Invoke(); 
+        OnPlayerTurnStart?.Invoke();
+
+        UIManager.Instance.EndButtonTrue();
     }
     public void EndPlayerTurn()
     {
         Debug.Log("플레이어 턴 종료");
-        OnTurnEnd?.Invoke();
-
         isPlayerTurn = false;
+        isEnemyTurn = true;
 
-        StartPlayerTurn();
+        OnPlayerTurnEnd?.Invoke();
     }
+    //턴 종료 버튼
+    public void OnClickEndTurn()
+    {
+        if (!isPlayerTurn) return;
+        if (UnitSelectManager.Instance.FirstCheckFront) return;
+
+        EndPlayerTurn();
+        UIManager.Instance.NoButtonTrue();
+    }
+
 }

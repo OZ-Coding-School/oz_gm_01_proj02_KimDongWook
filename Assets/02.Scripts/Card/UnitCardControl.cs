@@ -44,7 +44,10 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     public bool IsSpecial => cardData.cardType == CardType.Special;
     public bool IsFront => unitPosition == UnitPosition.Front;
     public bool IsBack => unitPosition == UnitPosition.Back;
+    public bool IsNone => unitPosition == UnitPosition.None;
     public bool IsDead => IsStriker && currentHP <= 0;
+
+    public UnitCardUI UnitCardUI { get { return unitCardUI; } }
 
     //매개변수로 받는 데이터를 카드 프리팹의 데이터로 전환
     public void SetCardData(CardData data, UnitOwner owner)
@@ -114,7 +117,7 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
             Die();
         }
     }
-
+    //유닛 사망
     private void Die()
     {
         if (currentSlot != null)
@@ -124,11 +127,20 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
 
         Destroy(gameObject);
     }
-
+    //플레이어 유닛 선택 터치
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!IsPlayer) return;
 
         UnitSelectManager.Instance.SelectUnit(this);
+    }
+    //유닛 카드의 일반 공격
+    public void UnitDoAttack()
+    {
+        Debug.Log($"[{cardData.cardName}] 공격 발동");
+        Debug.Log($"설명: {cardData.abilityText}");
+
+        //나중에 공격 처리 입력할 거임
+
     }
 }

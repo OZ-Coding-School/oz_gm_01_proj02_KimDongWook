@@ -26,8 +26,6 @@ public class UnitSlot : MonoBehaviour
     public void SetUnitFront()
     {
         rect.anchoredPosition = basePos + Vector2.up * 40f;
-
-
     }
     //후위 연출
     public void SetUnitBack()

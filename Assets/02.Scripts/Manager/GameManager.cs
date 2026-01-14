@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //[SerializeField] private PlayerFieldZone playerFieldZone;
-    //[SerializeField] private List<UnitCardControl> unitCards;
-
     void Start()
     {
-        TurnManager.Instance.StartPlayerTurn();
-
         //유닛 배치
         //FieldCardManager.Instance.CreatUnitCard();
         FieldCardManager.Instance.StartAllUnitSummon();
@@ -28,6 +23,9 @@ public class GameManager : MonoBehaviour
 
         //묘지 수 표시
         GraveyardZone.Instance.GraveyardView();
+
+        //모든 사전 준비 끝 -> 플레이어 턴 시작
+        TurnManager.Instance.StartPlayerTurn();
     }
 
     //PlayerTurn

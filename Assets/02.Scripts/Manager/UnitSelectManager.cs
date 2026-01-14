@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,17 @@ public class UnitSelectManager : MonoBehaviour
 {
     public static UnitSelectManager Instance { get; private set; }
 
-    [Header("플레이어 유닛 카드를 등록")]
-    [SerializeField] private List<UnitCardControl> playerUnits = new List<UnitCardControl>();
+    //[Header("플레이어 유닛 카드를 등록")]
+    //[SerializeField] private List<UnitCardControl> playerUnits = new List<UnitCardControl>();
     private UnitCardControl selectUnit;
 
-    //카드 선택 확정
-    private bool decisionSelect = false;
-
+    private bool firstCheckFront = true;
+    public bool FirstCheckFront
+    {
+        get {  return firstCheckFront; }
+        set { firstCheckFront = value; }
+    }
+ 
     private void Awake()
     {
         if (Instance == null)
@@ -26,18 +31,9 @@ public class UnitSelectManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //필드에 유닛이 소환될 때 호출
-    public void AddPlayerUnit(UnitCardControl unitCard)
-    {
-        if(!playerUnits.Contains(unitCard))
-        {
-            playerUnits.Add(unitCard);
-        }
-    }
-
     public void SelectUnit(UnitCardControl unitCard)
     {
-        if (decisionSelect) return;
+        if (!TurnManager.Instance.IsPlayerTurn) return;
 
         if (selectUnit != null)
         {
@@ -48,18 +44,11 @@ public class UnitSelectManager : MonoBehaviour
 
         selectUnit.OnSelect();
 
-        UIManager.Instance.okButton.gameObject.SetActive(true);
-        UIManager.Instance.endButton.gameObject.SetActive(false);
+        UIManager.Instance.OkButtonTrue();
     }
-
-    public void OnClickUnit()
+    private void PlayerUnitSwap()
     {
-        if (selectUnit == null) return;
-        if (TurnManager.Instance.IsEnemyTrun) return; //적의 턴이면 클릭 못하게
-
-        //decisionSelect = true;
-
-        foreach (var unit in playerUnits)
+        foreach (var unit in FieldCardManager.Instance.PlayerUnits)
         {
             if (unit == selectUnit)
             {
@@ -72,8 +61,83 @@ public class UnitSelectManager : MonoBehaviour
                 unit.UnitBack();
             }
         }
-
-        UIManager.Instance.okButton.gameObject.SetActive(false);
-        UIManager.Instance.endButton.gameObject.SetActive(true);
     }
+    private void PlayerUnitAttack()
+    {
+        Debug.Log($" 플레이어 유닛 [{selectUnit.name}] 일반 공격 실행");
+
+        selectUnit.UnitDoAttack();
+
+        UIManager.Instance.NoButtonTrue();
+
+    }
+    public void OnClickSwapAndAttack()
+    {
+        if (selectUnit == null) return;
+        if (TurnManager.Instance.IsEnemyTrun) return; //적의 턴이면 클릭 못하게
+        Debug.Log($"전위 : {selectUnit.IsFront}, 후위 : {selectUnit.IsBack}" );
+
+        if (selectUnit.IsNone)
+        {
+            PlayerUnitSwap();
+            UIManager.Instance.EndButtonTrue();
+            firstCheckFront = false;
+            return;
+        }
+
+        if (selectUnit.IsBack)
+        {
+            if (!CostManager.Instance.UseCost(1)) return;
+
+            PlayerUnitSwap();
+            UIManager.Instance.EndButtonTrue();
+            return;
+        }
+
+        if (selectUnit.IsFront || selectUnit.IsSpecial)
+        {
+            PlayerUnitAttack();
+            TurnManager.Instance.EndPlayerTurn();
+        }
+
+        UIManager.Instance.EndButtonTrue();
+    }
+
+    public void ClearSelectUnit()
+    {
+        if (selectUnit != null)
+        {
+            selectUnit.OnDeselect();
+            selectUnit = null;
+        }
+    }
+    //public void OnClickSwapAndAttack()
+    //{
+    //    if (selectUnit == null) return;
+    //    if (TurnManager.Instance.IsEnemyTrun) return; //적의 턴이면 클릭 못하게
+    //    if (!CostManager.Instance.UseCost(1))
+    //    {
+    //        Debug.Log(CostManager.Instance.CurrentCost);
+    //        return;
+    //    }
+    //    //decisionSelect = true;
+    //
+    //
+    //    foreach (var unit in FieldCardManager.Instance.PlayerUnits)
+    //    {
+    //        if (unit == selectUnit)
+    //        {
+    //            unit.SetUnitPosition(UnitPosition.Front);
+    //            unit.UnitFront();
+    //        }
+    //        else
+    //        {
+    //            unit.SetUnitPosition(UnitPosition.Back);
+    //            unit.UnitBack();
+    //        }
+    //    }
+    //
+    //    UIManager.Instance.okButton.gameObject.SetActive(false);
+    //    UIManager.Instance.endButton.gameObject.SetActive(true);
+    //}
 }
