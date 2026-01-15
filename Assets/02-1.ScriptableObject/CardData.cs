@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 //카드 종류
@@ -9,15 +10,13 @@ public enum CardType
     Equipment,
     Field
 }
-//공격 패턴
-public enum AttackPattern
+public enum FactionType
 {
     None,
-    FrontOnly,
-    BackOnly,
-    AllAttack,
-    AllBack,
-    RandomAttack
+    Justice,       // 장의실현부
+    TeaParty,      // 티파티
+    PretectTeam,   // 선도부
+    Hyakkiyako     // 백귀야행
 }
 //패시브 발동 트리거
 public enum PassiveTrigger
@@ -36,26 +35,30 @@ public class CardData : ScriptableObject
     [Header("공통정보")]
     public string cardName;
     public CardType cardType;
+    public FactionType factionType;
     public int cost;
 
-    [Header("체력,공격,스킬 능력치")]
+    [Header("체력,공격력,스킬 능력치")]
     public int maxHP;
-    public int attack; //코하루 카드, 미숙한 티파티 임원 한정 공격 -> 회복
-    public int ability;
+    public int attackCount; //코하루 카드, 미숙한 티파티 임원 한정 공격 -> 회복
+    public int shieldCount; //기본적으로 다 0 -> 자신 혹은 다른 카드의 도움으로 증가
+    public int abilityCount; //일반 공격에서 특수 능력 수치, 패시브 능력 수치
 
     [Header("앞면 이미지")]
     public Sprite frontImage;      //앞면 이미지
     public Sprite EquipmentImage;  //장비 카드만 이미지 하나 더 있음
     public Sprite typeIcon;        //타입 아이콘(사건,장비,필드)
 
-    [TextArea]
-    public string abilityText; //스트라이커 기본 공격 능력 또는 서포트 카드 능력 설명
+    [Header("일반 공격 패턴")]
+    public List<EffectData> attackEffects;
 
-    [Header("공격 패턴")]
-    public AttackPattern attackPattern;
+    [TextArea]
+    public string abilityText; //유닛 기본 공격 설명
 
     [Header("패시브 발동 트리거")]
     public PassiveTrigger passiveTrigger;
+    public List<EffectData> passiveEffects;
+
     [TextArea]
     public string passiveText; //패시브 설명
 

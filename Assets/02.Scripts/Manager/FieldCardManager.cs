@@ -10,18 +10,35 @@ public class FieldCardManager : MonoBehaviour
     [Header("유닛 카드 프리팹")]
     [SerializeField] private UnitCardControl unitCardPrefab;
 
-    [Header("플레이어 필드 유닛 데이터(스크립터블))")]
-    [SerializeField] private List<CardData> playerUnitDatas;
+    //===플레이어 스트라이커 유닛===
+    [Header("플레이어 스트라이커 유닛 데이터(스크립터블))")]
+    [SerializeField] private List<CardData> playerStrikerDatas;
 
-    [Header("플레이어 필드 슬롯")]
-    [SerializeField] private List<UnitSlot> playerUnitSlots;
+    [Header("플레이어 스트라이커 슬롯")]
+    [SerializeField] private List<UnitSlot> playerStrikerSlots;
 
-    [Header("적 필드 유닛 데이터(스크립터블)")]
-    [SerializeField] private List<CardData> enemyUnitDatas;
+    //===플레이어 스페셜 유닛===
+    [Header("플레이어 스페셜 유닛 데이터(스크립터블))")]
+    [SerializeField] private List<CardData> playerSpecialDatas;
 
-    [Header("플레이어 필드 슬롯")]
-    [SerializeField] private List<UnitSlot> enemyUnitSlots;
+    [Header("플레이어 스페셜 슬롯")]
+    [SerializeField] private List<UnitSlot> playerSpecialSlots;
 
+    //===적 스트라이커 유닛===
+    [Header("적 스트라이커 데이터(스크립터블)")]
+    [SerializeField] private List<CardData> enemyStrikerDatas;
+
+    [Header("적 스트라이커 슬롯")]
+    [SerializeField] private List<UnitSlot> enemyStrikerSlots;
+
+    //===적 스페셜 유닛===
+    [Header("적 스페셜 유닛 데이터(스크립터블))")]
+    [SerializeField] private List<CardData> enemySpecialDatas;
+
+    [Header("적 스페셜 슬롯")]
+    [SerializeField] private List<UnitSlot> enemySpecialSlots;
+
+    //===카드등록===
     [Header("플레이어 유닛 카드를 등록")]
     [SerializeField] private List<UnitCardControl> playerUnits;
     
@@ -53,8 +70,17 @@ public class FieldCardManager : MonoBehaviour
 
     public void StartAllUnitSummon()
     {
-        CreatUnitCard(playerUnitDatas, playerUnitSlots, UnitOwner.Player);
-        CreatUnitCard(enemyUnitDatas, enemyUnitSlots, UnitOwner.Enemy);
+        if (playerStrikerDatas.Count > 0)
+            CreatUnitCard(playerStrikerDatas, playerStrikerSlots, UnitOwner.Player);
+
+        if (playerSpecialDatas.Count > 0)
+            CreatUnitCard(playerSpecialDatas, playerSpecialSlots, UnitOwner.Player);
+
+        if (enemyStrikerDatas.Count > 0)
+            CreatUnitCard(enemyStrikerDatas, enemyStrikerSlots, UnitOwner.Enemy);
+
+        if (enemySpecialDatas.Count > 0)
+            CreatUnitCard(enemySpecialDatas, enemySpecialSlots, UnitOwner.Enemy);
     }
     //실제 플레이어 유닛 카드 등록
     public void AddPlayerUnit(UnitCardControl unitCard)
@@ -78,6 +104,14 @@ public class FieldCardManager : MonoBehaviour
 
         for (int i = 0; i < unitList.Count; i++)
         {
+            CardData data = unitCards[i];
+
+            if (data == null)
+            {
+                Debug.LogError($"{owner} 유닛 데이터 [{i}]가 null 입니다");
+                continue;
+            }
+
             UnitCardControl card = Instantiate(unitCardPrefab);
 
             RectTransform cardRect = card.GetComponent<RectTransform>();
@@ -91,13 +125,17 @@ public class FieldCardManager : MonoBehaviour
 
             UnitCardUI ui = card.GetComponent<UnitCardUI>();
             ui.BaseTransform();
-            ui.SetStartSize();
 
             card.gameObject.SetActive(true);
 
             if (owner == UnitOwner.Player)
             {
                 AddPlayerUnit(card);
+
+                if (card.IsStriker)
+                {
+                    ui.SetStartSize();
+                }
             }
             else if (owner == UnitOwner.Enemy)
             {

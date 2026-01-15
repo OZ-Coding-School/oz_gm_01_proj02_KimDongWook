@@ -32,7 +32,8 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     [Header("유닛의 전열/후열 구별")]
     [SerializeField] private UnitPosition unitPosition;
 
-    private int currentHP;
+    private int currentHP;      //현재 hp
+    private int currentShield;  //현재 실드
 
     private UnitSlot currentSlot;
 
@@ -44,10 +45,10 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     public bool IsSpecial => cardData.cardType == CardType.Special;
     public bool IsFront => unitPosition == UnitPosition.Front;
     public bool IsBack => unitPosition == UnitPosition.Back;
-    public bool IsNone => unitPosition == UnitPosition.None;
     public bool IsDead => IsStriker && currentHP <= 0;
-
-    public UnitCardUI UnitCardUI { get { return unitCardUI; } }
+    public UnitPosition UnitPosition => unitPosition;
+    public UnitCardUI UnitCardUI => unitCardUI;
+    public CardData CardData => cardData;
 
     //매개변수로 받는 데이터를 카드 프리팹의 데이터로 전환
     public void SetCardData(CardData data, UnitOwner owner)
@@ -102,14 +103,29 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
         unitCardUI.SetNormalSize();
         currentSlot.SetUnitBack();
     }
-    //나중에 쓰일 데미지 메서드
+    //해당 카드가 적에게 데미지를 받는 기능
     public void TakeDamage(int damage)
     {
         if (!IsStriker) return;
 
-        currentHP -= damage;
-        //currentHP = Mathf.Max(0, currentHP);
-        unitCardUI.UpdateHP(currentHP);
+        //만약 실드가 있다면 데미지를 실드가 대신 받음
+        if (currentShield > 0)
+        {
+            currentShield -= damage;
+            unitCardUI.UpdateHP(currentShield);
+
+            //받은 데미지가 실드보다 높으면 그 만큼의 데미지를 HP에서 차감
+            if (currentShield < 0)
+            {
+                currentHP -= currentShield;
+                unitCardUI.UpdateHP(currentHP);
+            }
+        }
+        else
+        {
+            currentHP -= damage;
+            unitCardUI.UpdateHP(currentHP);
+        }
 
         if (currentHP <= 0)
         {
@@ -126,6 +142,27 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
         }
 
         Destroy(gameObject);
+    }
+    //해당 카드가 회복받을 때
+    public void Heal(int healCount)
+    {
+        if (!IsStriker) return;
+
+        currentHP += healCount;
+        currentHP = Mathf.Min(currentHP, cardData.maxHP);
+
+        unitCardUI.UpdateHP(currentHP);
+    }
+    //공격력 증가 버프를 받았을 때
+    public void AddAttackCount(int addCount)
+    {
+        cardData.attackCount += addCount;
+    }
+    //실드를 받았을 때
+    public void AddShieldCount(int addCount)
+    {
+        currentShield += addCount;
+        unitCardUI.UpdateShield(currentShield);
     }
     //플레이어 유닛 선택 터치
     public void OnPointerClick(PointerEventData eventData)

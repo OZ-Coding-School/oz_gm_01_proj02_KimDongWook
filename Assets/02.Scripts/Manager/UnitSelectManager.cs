@@ -31,6 +31,7 @@ public class UnitSelectManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //유닛 카드 선택
     public void SelectUnit(UnitCardControl unitCard)
     {
         if (!TurnManager.Instance.IsPlayerTurn) return;
@@ -45,7 +46,10 @@ public class UnitSelectManager : MonoBehaviour
         selectUnit.OnSelect();
 
         UIManager.Instance.OkButtonTrue();
+
+        Debug.Log(selectUnit.UnitPosition);
     }
+    //전위,후위 스왑
     private void PlayerUnitSwap()
     {
         foreach (var unit in FieldCardManager.Instance.PlayerUnits)
@@ -57,11 +61,13 @@ public class UnitSelectManager : MonoBehaviour
             }
             else
             {
+                if (unit.IsSpecial) return;
                 unit.SetUnitPosition(UnitPosition.Back);
                 unit.UnitBack();
             }
         }
     }
+    //전위 공격 시작
     private void PlayerUnitAttack()
     {
         Debug.Log($" 플레이어 유닛 [{selectUnit.name}] 일반 공격 실행");
@@ -75,32 +81,34 @@ public class UnitSelectManager : MonoBehaviour
     {
         if (selectUnit == null) return;
         if (TurnManager.Instance.IsEnemyTrun) return; //적의 턴이면 클릭 못하게
-        Debug.Log($"전위 : {selectUnit.IsFront}, 후위 : {selectUnit.IsBack}" );
 
-        if (selectUnit.IsNone)
+        if (!selectUnit.IsSpecial)
         {
-            PlayerUnitSwap();
-            UIManager.Instance.EndButtonTrue();
-            firstCheckFront = false;
-            return;
+            switch (selectUnit.UnitPosition)
+            {
+                case UnitPosition.None:
+                    if (selectUnit.IsSpecial) return;
+                    PlayerUnitSwap();
+                    UIManager.Instance.EndButtonTrue();
+                    firstCheckFront = false;
+                    break;
+                case UnitPosition.Back:
+                    if (!CostManager.Instance.UseCost(1)) return;
+                    PlayerUnitSwap();
+                    UIManager.Instance.EndButtonTrue();
+                    break;
+                case UnitPosition.Front:
+                    PlayerUnitAttack();
+                    TurnManager.Instance.EndPlayerTurn();
+                    UIManager.Instance.NoButtonTrue();
+                    break;
+            }
         }
-
-        if (selectUnit.IsBack)
-        {
-            if (!CostManager.Instance.UseCost(1)) return;
-
-            PlayerUnitSwap();
-            UIManager.Instance.EndButtonTrue();
-            return;
-        }
-
-        if (selectUnit.IsFront || selectUnit.IsSpecial)
+        else
         {
             PlayerUnitAttack();
-            TurnManager.Instance.EndPlayerTurn();
+            UIManager.Instance.EndButtonTrue();
         }
-
-        UIManager.Instance.EndButtonTrue();
     }
 
     public void ClearSelectUnit()

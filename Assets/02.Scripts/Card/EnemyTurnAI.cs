@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class EnemyTurnAI : MonoBehaviour
 {
-    private void OnEnable()
+    private void Start()
     {
         TurnManager.Instance.OnPlayerTurnEnd += OnPlayerTurnEnd;
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         TurnManager.Instance.OnPlayerTurnEnd -= OnPlayerTurnEnd;
     }
 
     private void OnPlayerTurnEnd()
     {
+        Debug.Log("적 턴 시작");
         StartCoroutine(EnemyTurnRoutine());
     }
     IEnumerator EnemyTurnRoutine()
     {
         Debug.Log("적 턴 시작");
-
-        UIManager.Instance.NoButtonTrue();
 
         yield return new WaitForSeconds(0.5f);
         EnemyAction();
