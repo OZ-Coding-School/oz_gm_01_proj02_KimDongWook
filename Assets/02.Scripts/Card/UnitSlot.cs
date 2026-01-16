@@ -23,9 +23,16 @@ public class UnitSlot : MonoBehaviour
         unitCard.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
     //전위 연출
-    public void SetUnitFront()
+    public void SetUnitFront(UnitCardControl unitCard)
     {
-        rect.anchoredPosition = basePos + Vector2.up * 40f;
+        if (unitCard.IsPlayer)
+        {
+            rect.anchoredPosition = basePos + Vector2.up * 40f;
+        }
+        else
+        {
+            rect.anchoredPosition = basePos + Vector2.down * 40f;
+        }
     }
     //후위 연출
     public void SetUnitBack()

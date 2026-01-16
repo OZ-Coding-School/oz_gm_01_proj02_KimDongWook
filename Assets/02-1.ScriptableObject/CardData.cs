@@ -15,6 +15,7 @@ public enum FactionType
     None,
     Justice,       // 장의실현부
     TeaParty,      // 티파티
+    Study,         // 보충수업부
     PretectTeam,   // 선도부
     Hyakkiyako     // 백귀야행
 }
@@ -41,8 +42,8 @@ public class CardData : ScriptableObject
     [Header("체력,공격력,스킬 능력치")]
     public int maxHP;
     public int attackCount; //코하루 카드, 미숙한 티파티 임원 한정 공격 -> 회복
-    public int shieldCount; //기본적으로 다 0 -> 자신 혹은 다른 카드의 도움으로 증가
     public int abilityCount; //일반 공격에서 특수 능력 수치, 패시브 능력 수치
+    public int shieldCount; //기본적으로 다 0 -> 자신 혹은 다른 카드의 도움으로 증가
 
     [Header("앞면 이미지")]
     public Sprite frontImage;      //앞면 이미지

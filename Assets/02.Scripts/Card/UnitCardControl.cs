@@ -34,6 +34,7 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
 
     private int currentHP;      //현재 hp
     private int currentShield;  //현재 실드
+    private int currentAttack;  //현재 공격력
 
     private UnitSlot currentSlot;
 
@@ -49,6 +50,7 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     public UnitPosition UnitPosition => unitPosition;
     public UnitCardUI UnitCardUI => unitCardUI;
     public CardData CardData => cardData;
+    public int CurrentAttack => currentAttack;
 
     //매개변수로 받는 데이터를 카드 프리팹의 데이터로 전환
     public void SetCardData(CardData data, UnitOwner owner)
@@ -56,6 +58,7 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
         cardData = data;
         unitOwner = owner;
         unitPosition = UnitPosition.None;
+        currentAttack = data.attackCount;
 
         if (IsStriker)
         {
@@ -94,7 +97,7 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     {
         unitPosition = UnitPosition.Front;
         unitCardUI.SetNormalSize();
-        currentSlot.SetUnitFront();
+        currentSlot.SetUnitFront(this);
     }
     //카드 후위 UI 연출
     public void UnitBack()
@@ -130,6 +133,7 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
         if (currentHP <= 0)
         {
             //유닛의 hp가 0이 되면
+            currentSlot.SetUnitBack();
             Die();
         }
     }
@@ -156,7 +160,8 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     //공격력 증가 버프를 받았을 때
     public void AddAttackCount(int addCount)
     {
-        cardData.attackCount += addCount;
+        currentAttack += addCount;
+        Debug.Log($"현재 공격력 : {cardData.attackCount}");
     }
     //실드를 받았을 때
     public void AddShieldCount(int addCount)
@@ -167,8 +172,6 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
     //플레이어 유닛 선택 터치
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!IsPlayer) return;
-
         UnitSelectManager.Instance.SelectUnit(this);
     }
     //유닛 카드의 일반 공격
@@ -178,6 +181,15 @@ public class UnitCardControl : MonoBehaviour, IPointerClickHandler
         Debug.Log($"설명: {cardData.abilityText}");
 
         //나중에 공격 처리 입력할 거임
+        EffectExecuteManager.Instance.ExecuteEffect(this, cardData.attackEffects);
 
+    }
+    //유닛 카드의 패시브 발동
+    public void UnitDoPassive()
+    {
+        Debug.Log($"[{cardData.cardName}] 패시브 발동");
+        Debug.Log($"설명: {cardData.passiveText}");
+
+        //EffectExecuteManager.Instance.ExecuteEffect(this, cardData.passiveEffects);
     }
 }

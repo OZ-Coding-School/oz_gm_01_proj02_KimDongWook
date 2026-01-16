@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: "\uC774\uC624\uB9AC"
   cardType: 0
+  factionType: 3
   cost: 4
   maxHP: 11
-  attack: 3
-  ability: 0
+  attackCount: 3
+  abilityCount: 0
+  shieldCount: 0
   frontImage: {fileID: 21300000, guid: 290d4f6e2f302474b99435af7cac0a31, type: 3}
   EquipmentImage: {fileID: 0}
   typeIcon: {fileID: 0}
+  attackEffects: []
   abilityText: 
-  attackPattern: 0
   passiveTrigger: 0
+  passiveEffects: []
   passiveText: 

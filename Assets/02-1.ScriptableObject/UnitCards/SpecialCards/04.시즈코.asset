@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: "\uC2DC\uC988\uCF54"
   cardType: 1
+  factionType: 5
   cost: 3
   maxHP: 0
-  attack: 0
-  ability: 0
+  attackCount: 0
+  abilityCount: 1
+  shieldCount: 0
   frontImage: {fileID: 21300000, guid: 8265b38ac489e35458b116bd3355b3cf, type: 3}
   EquipmentImage: {fileID: 0}
   typeIcon: {fileID: 0}
-  abilityText: 
-  attackPattern: 0
+  attackEffects: []
+  abilityText: "\uC190\uD328\uC5D0\uC11C \uBB34\uC791\uC704 \uCE74\uB4DC\uB97C 1\uC7A5
+    \uBCF5\uC0AC\uD558\uC5EC \uCF54\uC2A4\uD2B8\uAC00 0\uC778 \uC77C\uD68C\uC6A9
+    \uCE74\uB4DC\uB85C \uC0DD\uC131\uD55C\uB2E4. \uB0B4 Phase \uC885\uB8CC \uC2DC,
+    \uADF8 \uCE74\uB4DC\uB294 \uBC84\uB824\uC9C4\uB2E4."
   passiveTrigger: 0
-  passiveText: 
+  passiveEffects: []
+  passiveText: "\uB0B4 Phase \uC2DC\uC791 \uC2DC: \uC190\uD328\uC758 \uBB34\uC791\uC704
+    \uCE74\uB4DC 1\uC7A5\uC758 \uCF54\uC2A4\uD2B8\uAC00 1\uAC10\uC18C\uD55C\uB2E4.
+    \uB0B4 Phase \uC885\uB8CC \uC2DC, \uADF8 \uCE74\uB4DC\uB294 \uBC84\uB824\uC9C4\uB2E4."

@@ -24,6 +24,7 @@ public enum TargetSelectType
 
     RandomTarget,    // 랜덤 타겟
 
+    FrontMember,
     SelectMember,    // 멤버 선택
     MinMember,       // 체력이 가장 낮은 멤버
     AllBackMember,   // 후위 멤버 전부
@@ -41,11 +42,11 @@ public enum ValueSource
 }
 
 [System.Serializable]
-public class EffectData : MonoBehaviour
+public class EffectData
 {
     public EffectType effectType;
     public TargetSelectType targetSelectType;
 
     public ValueSource valueSource;  //데미지,회복,증가 수치
-    public int count;  //적용 대상 수, 카드 수
+    //public int count;  //적용 대상 수, 카드 수
 }

@@ -6,7 +6,7 @@ public class CostManager : MonoBehaviour
 {
     public static CostManager Instance { get; private set; }
 
-    public int CurrentCost { get; private set; }
+    public int CurrentCost { get; set; }
     public int MaxCost { get; private set; }
 
     private int playerTurnCount = 0;

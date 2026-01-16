@@ -81,6 +81,8 @@ public class FieldCardManager : MonoBehaviour
 
         if (enemySpecialDatas.Count > 0)
             CreatUnitCard(enemySpecialDatas, enemySpecialSlots, UnitOwner.Enemy);
+
+        EnemyStartPosition();
     }
     //실제 플레이어 유닛 카드 등록
     public void AddPlayerUnit(UnitCardControl unitCard)
@@ -156,5 +158,49 @@ public class FieldCardManager : MonoBehaviour
 
         return null;
     }    
+
+    //시작 시 적 카드 전위/후위 정하기
+    private void EnemyStartPosition()
+    {
+        bool beFront = false;   
+
+        foreach (var enemyUnit in enemyUnits)
+        {
+            if (enemyUnit.IsFront)
+            {
+                beFront = true;
+            }
+        }
+
+        if (!beFront)
+        {
+            for (int i = 0; i < enemyUnits.Count; i++)
+            {
+                if (enemyUnits[i] == enemyUnits[0])
+                {
+                    enemyUnits[i].UnitFront();
+                }
+                else
+                {
+                    enemyUnits[i].UnitBack();
+                }
+            }
+        }
+        else
+        {
+            foreach (var enemyUnit in enemyUnits)
+            {
+                if (enemyUnit.IsFront)
+                {
+                    enemyUnit.UnitFront();
+                }
+                else
+                {
+                    if (enemyUnit.IsSpecial) return;
+                    enemyUnit.UnitBack();
+                }
+            }
+        }
+    }
     
 }

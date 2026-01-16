@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Ichka
   cardType: 0
+  factionType: 1
   cost: 2
   maxHP: 8
-  attack: 3
+  attackCount: 3
+  abilityCount: 0
+  shieldCount: 0
   frontImage: {fileID: 21300000, guid: 59bbb66bce9291e4588d55a83729df0a, type: 3}
   EquipmentImage: {fileID: 0}
   typeIcon: {fileID: 0}
-  abilityText: 
-  attackPattern: 1
+  attackEffects:
+  - effectType: 0
+    targetSelectType: 0
+    valueSource: 0
+  abilityText: "\uC804\uC5F4\uC758 \uC801\uC5D0\uAC8C \uD53C\uD574\uB97C \uC900\uB2E4."
   passiveTrigger: 3
+  passiveEffects: []
   passiveText: 

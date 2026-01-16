@@ -539,6 +539,8 @@ MonoBehaviour:
   backImage: {fileID: 2438042020611097366}
   hpRoot: {fileID: 4502418797898693142}
   hpText: {fileID: 1205770303949728945}
+  shieldRoot: {fileID: 5683250517330110177}
+  shieldText: {fileID: 866935957753647805}
 --- !u!1 &5683250517330110177
 GameObject:
   m_ObjectHideFlags: 0
